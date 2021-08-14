@@ -30,23 +30,42 @@ public class SimonSays extends KeyAdapter {
 
 	// Complete steps 1 - 7 before you test
 	// 1. Declare a JFrame variable
-
+JFrame j;
 	public void run() {
 		// 2. Add the four images that match keyboard keys like this:
 		// images.put(KeyEvent.VK_UP, "up.jpg");
-
+images.put(KeyEvent.VK_UP, "up.jpg");
+images.put(KeyEvent.VK_DOWN, "down.jpg");
+images.put(KeyEvent.VK_LEFT, "left.jpg");
+images.put(KeyEvent.VK_RIGHT, "right.jpg");
 		// 3. Use a JOptionPane to tell the user the rules: "Press the matching
 		// key when
 		// 'Simon says' otherwise press a different key"
-
+JOptionPane.showMessageDialog(null,"Press the matching key when 'Simon says', otherwise press anyother");
 		// 4. Call the showImage method to show an image
-
+showImage();
 	}
 
 	public void keyPressed(KeyEvent e) {
 		// 15. Make a points variable to track the score.
-
-		// 16. If the keyCode matches the imageIndex and "Simon says"
+int points=0;
+		// 16. Ie f the keyCode matches thimageIndex and "Simon says"
+if(e.getKeyCode()==imageIndex&&simonSays==true){
+	points+=1;
+	speak("correct");
+}
+if(e.getKeyCode()==imageIndex&&simonSays==false){
+	points-=1;
+	speak("simon didn't say that");
+}
+if(e.getKeyCode()!=imageIndex&&simonSays==true){
+	points+=1;
+	speak("simon didn't say that");
+}
+if(e.getKeyCode()!=imageIndex&&simonSays==false){
+	points+=1;
+	speak("good");
+}
 
 		// 17. Increase the value of score
 
@@ -74,22 +93,45 @@ public class SimonSays extends KeyAdapter {
 
 	private void showImage() {
 		// 5. Initialize your frame to a new JFrame()
-
+j= new JFrame();
 		// 6. Set the frame to visible
-
+j.setVisible(true);
 		// 7. Uncomment the following line to add a random image to your frame
-		// frame.add(getNextRandomImage());
+		j.add(getNextRandomImage());
 
 		// 8. Set the name of your frame
-
+j.setName("Simon Says");
 		// 9. Pack the frame
-
+j.pack();
 		// 10. Set the defaultCloseOperation of your frame to
 		// JFrame.EXIT_ON_CLOSE
-
+j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 11. Add a key listener to the frame
-
+j.addKeyListener(this);
 		// 12. Create a new instance of Random
+Random ran = new Random();
+
+
+String simon="";
+if(this.imageIndex==38) {
+	simon="up";
+}
+if(this.imageIndex==40) {
+	simon="down";
+}
+if(this.imageIndex==37) {
+	simon="left";
+}
+if(this.imageIndex==39) {
+	simon="right";
+}
+simonSays = ran.nextBoolean();
+if(simonSays==true) {
+	speak("Simon says" + simon);
+}
+else {
+	speak(simon);
+}
 
 		// 13. Use the Random and the speak method to either say
 		// "Simon says press this key" or "Press this key"
