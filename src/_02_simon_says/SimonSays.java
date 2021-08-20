@@ -27,11 +27,12 @@ public class SimonSays extends KeyAdapter {
 	private int tries = 0;
 	private boolean simonSays = false;
 	Date timeAtStart;
-
+	int points=0;
 	// Complete steps 1 - 7 before you test
 	// 1. Declare a JFrame variable
 JFrame j;
 	public void run() {
+		
 		// 2. Add the four images that match keyboard keys like this:
 		// images.put(KeyEvent.VK_UP, "up.jpg");
 images.put(KeyEvent.VK_UP, "up.jpg");
@@ -48,23 +49,36 @@ showImage();
 
 	public void keyPressed(KeyEvent e) {
 		// 15. Make a points variable to track the score.
-int points=0;
+
 		// 16. Ie f the keyCode matches thimageIndex and "Simon says"
 if(e.getKeyCode()==imageIndex&&simonSays==true){
-	points+=1;
+	points=points+1;
 	speak("correct");
+	tries+=1;
 }
 if(e.getKeyCode()==imageIndex&&simonSays==false){
-	points-=1;
-	speak("simon didn't say that");
+	points=points-1;
+	speak("simon did not say that");
+	tries+=1;
 }
 if(e.getKeyCode()!=imageIndex&&simonSays==true){
-	points+=1;
-	speak("simon didn't say that");
+	points=points-1;
+	speak("simon did not say that");
+	tries+=1;
 }
 if(e.getKeyCode()!=imageIndex&&simonSays==false){
 	points+=1;
 	speak("good");
+	tries+=1;
+	
+	}
+if(tries<9) {
+	j.dispose();
+	showImage();
+}
+else {
+	JOptionPane.showMessageDialog(null, "You score is: " + points);
+	System.exit(0);
 }
 
 		// 17. Increase the value of score
